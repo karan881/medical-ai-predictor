@@ -18,9 +18,9 @@ form.addEventListener('submit', async (e) => {
 
         const data = await response.json();
 
-        if (data && data.length > 0) {
+        if (data && data.results && data.results.length > 0) {
             let output = "<h2>Results:</h2>";
-            data.forEach(d => {
+            data.results.forEach(d => {
                 output += `
                     <div>
                         <h3>${d.Disease}</h3>
