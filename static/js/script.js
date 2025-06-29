@@ -10,7 +10,7 @@ form.addEventListener('submit', async (e) => {
     resultDiv.innerHTML = "⏳ Loading...";
 
     try {
-        const response = await fetch('/predict', {
+        const response = await fetch('https://karan20604-medical-ai-predictor.hf.space/predict', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({symptoms: symptoms})
@@ -18,9 +18,9 @@ form.addEventListener('submit', async (e) => {
 
         const data = await response.json();
 
-        if (data.results) {
+        if (data && data.length > 0) {
             let output = "<h2>Results:</h2>";
-            data.results.forEach(d => {
+            data.forEach(d => {
                 output += `
                     <div>
                         <h3>${d.Disease}</h3>
@@ -36,7 +36,7 @@ form.addEventListener('submit', async (e) => {
             });
             resultDiv.innerHTML = output;
         } else {
-            resultDiv.innerHTML = `<p style="color:red;">${data.error || "No results found"}</p>`;
+            resultDiv.innerHTML = `<p style="color:red;">No results found.</p>`;
         }
     } catch (error) {
         resultDiv.innerHTML = `<p style="color:red;">Error: ${error}</p>`;
